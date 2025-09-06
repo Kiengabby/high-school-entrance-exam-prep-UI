@@ -1,0 +1,28 @@
+<div>
+    <a class="wrap" style="width: 100%;" [href]="link" target="_blank" download>
+        <app-pdf-file ></app-pdf-file>
+        <div class="info">
+            <div nz-row style="width: 100%;">
+                <div nz-col nzSpan="19">
+                    <p style="font-family: ReadexPro-regular; font-size: 14px;">{{ fileName }}</p>
+                </div>
+                <div nz-col nzSpan="2">
+                    <p style="font-family: ReadexPro-regular; font-size: 14px;">{{ fileSize }}</p>
+                </div>
+                <div nz-col nzSpan="3">
+                    <p *ngIf="isDownloading" style="color: #121212; font-size: 14px;">Hủy tải</p>
+                    <p *ngIf="!isDownloaded" style="color: #7784EE; font-size: 14px;">Xem file</p>
+                </div>
+            </div>
+            <div>
+                <nz-progress *ngIf="isDownloading" [nzPercent]="90" nzSize="small"></nz-progress>
+                <p *ngIf="!isDownloading && fileType == 'excel'" style="font-family: ReadexPro-light; font-size: 13px;">
+                    Exel file</p>
+                <p *ngIf="!isDownloading && fileType == 'pdf'" style="font-family: ReadexPro-light; font-size: 13px;">
+                    Pdf file</p>
+                <p *ngIf="!isDownloading && fileType == 'docs'" style="font-family: ReadexPro-light; font-size: 13px;">
+                    Docs file</p>
+            </div>
+        </div>
+    </a>
+</div>

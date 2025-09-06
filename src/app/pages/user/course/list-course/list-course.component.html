@@ -1,0 +1,225 @@
+<ng-template #template>
+  <div class="ant-notification-notice-content" style="border-radius: 15px;">
+    <div class="ant-notification-notice-with-icon">
+      <span class="ant-notification-notice-icon">
+        <i class="fa-regular fa-face-sad-cry"></i>
+      </span>
+      <div class="ant-notification-notice-message" style="color: #389e0d !important;"></div>
+      <div class="ant-notification-notice-description">
+        {{ messageNotification }}
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<h6 style="color: #7D7D7D; font-size: 18px; font-weight: 600;">Khóa học của tôi</h6>
+
+<nz-skeleton *ngIf="isLoadingClass" [nzAvatar]="true" [nzParagraph]="{ rows: 5 }"></nz-skeleton>
+
+<div *ngIf="!listClass">
+  <nz-tag nzColor="success"
+    style="padding: 0.5rem 2rem; font-size: 1rem; border-radius: 1rem; width: 100%; margin-bottom: 1rem; ">
+    <span>
+      Bạn chưa tham gia khóa học nào
+    </span>
+    <i class="fa-regular fa-face-sad-cry" style="margin-left: 1rem;"></i>
+  </nz-tag>
+</div>
+
+<div *ngIf="!isLoadingClass && listClass" class="container-fluid" style="padding-left: 0;">
+  <div class="slider-wrap">
+    <div class="slider-main">
+      <div *ngFor="let item of listClass; let i = index" class="item" (click)="getCourseDetail(item.ID_COURSE)">
+        <div class="text" style="cursor: pointer;">
+          <nz-card [style]="'width: 350px; border-radius: 8px;'" [nzBordered]="false"
+            [nzTitle]="item.COURSE_INFO.COURSE_NAME" [nzExtra]="extraTemplate">
+            <p style="color: rgba(0, 0, 0, 0.6);"
+              [innerHTML]="sanitizer.bypassSecurityTrustHtml(item.COURSE_INFO.DESCRIPTION)" nz-typography nzEllipsis
+              [nzEllipsisRows]="4">
+            </p>
+
+            <div style="margin-top: 1rem;" class="courses">
+              <div>
+                <div style="margin-bottom: 0.5rem;">
+                  <i class="fas fa-user" style="color: #828282; margin-right: 0.5rem;"></i>
+                  <span style="color: #828282;">{{ item.COURSE_INFO.TEACHER_INFO.USERNAME }}</span>
+                </div>
+                <div style="margin-bottom: 0.5rem;">
+                </div>
+              </div>
+              <div style="margin-bottom: 0.5rem;">
+              </div>
+            </div>
+
+            <div>
+              <h6 style="font-size: 14px; color: #121212; margin-top: 0.5rem; margin-bottom: 0.8rem;">Bạn
+                cùng lớp</h6>
+              <div style="display: flex; align-items: center; justify-content: space-between;">
+                <div style="display: flex; align-items: center;">
+                  <nz-avatar-group>
+                    <nz-avatar [nzSrc]="item.CLASSMATES[0].AVATAR"></nz-avatar>
+                    <nz-avatar *ngIf="item.CLASSMATES.length > 1" nzSrc="item.CLASSMATES[1].AVATAR"
+                      style="background-color: #f56a00" nzText="U"></nz-avatar>
+                    <nz-avatar *ngIf="item.CLASSMATES.length > 2" nzSrc="item.CLASSMATES[2].AVATAR"
+                      style="background-color: #f56a00" nzText="U"></nz-avatar>
+                    <nz-avatar *ngIf="item.CLASSMATES.length > 3" nzSrc="item.CLASSMATES[3].AVATAR"
+                      style="background-color: #f56a00" nzText="U"></nz-avatar>
+                  </nz-avatar-group>
+                  <span *ngIf="item.CLASSMATES.length > 4" style="color: #595959; margin-left: 0.5rem;">+ {{
+                    item.CLASSMATES.length - 4 }} người bạn
+                    khác</span>
+                </div>
+                <!-- <nz-badge [nzCount]="5">
+                  <i class="fas fa-comments"
+                    style="color: #828282; margin-right: 0.5rem; font-size: 1rem; float: right;"></i>
+                </nz-badge> -->
+              </div>
+            </div>
+            <ng-template #extraTemplate>
+              <nz-tag [nzColor]="'#FF4D4F'" style="border-radius: 1rem !important;" *ngIf="item.noti">Nay
+                có {{ item.noti }} lúc {{
+                item.liveTime }} nha</nz-tag>
+            </ng-template>
+          </nz-card>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="listClass && listClass.length > 1" class="button-area">
+      <button type="button" class="next" appNext><i class="fas fa-chevron-right"></i></button>
+    </div>
+  </div>
+</div>
+
+<h6 style="color: #7D7D7D; font-size: 18px; font-weight: 600; margin-bottom: 0.5rem;">Các khóa học của chúng mình</h6>
+
+<!-- Các khóa học của chúng mình -->
+<ul nz-menu nzMode="horizontal"
+  style="background-color: none !important; margin-bottom: 0.5rem;  justify-content: center; display: flex;">
+  <li nz-menu-item (click)="selectMenuItem('Tất cả')" [nzSelected]="selectedMenuItem == 'Tất cả'">
+    Tất cả
+  </li>
+  <li nz-menu-item (click)="selectMenuItem('Khóa cơ bản')">
+    Khóa cơ bản
+  </li>
+  <li nz-menu-item (click)="selectMenuItem('Khóa nâng cao')">
+    Khóa nâng cao
+  </li>
+  <li nz-menu-item (click)="selectMenuItem('Luyện đề theo tỉnh thành')">
+    Luyện đề theo tỉnh thành
+  </li>
+</ul>
+
+<div style="margin-left: 2rem;
+  margin-bottom: 1.5rem;
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: flex-end;
+  justify-content: center;">
+  <div class="search-group">
+    <div style="    margin-left: 1.5rem;
+    width: 400px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;">
+      <div>
+        <label>Tìm theo tên khóa/giáo viên: </label>
+        <nz-input-group style="border-radius: 16px;
+        width: 200px;
+        margin-right: 1rem;" [nzSuffix]="suffixIconSearch">
+          <input type="text" [(ngModel)]="courseName" nz-input placeholder="Khóa học" style="margin-right: 1rem;" />
+          <input type="text" [(ngModel)]="teacherName" nz-input placeholder="Giáo viên" />
+        </nz-input-group>
+      </div>
+      <div>
+        <label>Tìm theo tỉnh thành: </label>
+        <nz-select style="min-width: 150px;" nzMode="multiple" nzPlaceHolder="Chọn tỉnh thành"
+          [(ngModel)]="listOfSelectedValue">
+          <nz-option *ngFor="let option of listProvinces" [nzLabel]="option.name" [nzValue]="option.slug"
+            [nzHide]="!isNotSelected(option)"></nz-option>
+        </nz-select>
+      </div>
+
+      <ng-template #suffixIconSearch>
+        <span nz-icon nzType="search"></span>
+      </ng-template>
+    </div>
+    <div style="margin-top: 1rem;">
+      <button (click)="resetValueSelected()" nz-button nzType="dashed" nzShape="circle"
+        style="padding: 0.3rem 0.8rem 0.3rem 0.8rem; border: none; margin-right: 1rem;">
+        <span nz-icon>
+          <i class="fas fa-trash"></i>
+        </span>
+        Đặt lại
+      </button>
+
+      <button [nzLoading]="isLoading" (click)="searchCourse()" nz-button nzType="primary"
+        style="background-color: #110D59; padding: 0.3rem 0.8rem 0.3rem 0.8rem; border: none;" nzShape="circle">
+        <span nz-icon nzType="search"></span>
+        Tìm kiếm
+      </button>
+    </div>
+  </div>
+  <nz-checkbox-wrapper style="width: 60%;" (nzOnChange)="onChangeSelectedSubject($event)">
+    <div nz-row>
+      <div *ngFor="let item of checkOptions" nz-col nzSpan="6" style="margin-bottom: 0.5rem;">
+        <label style="white-space: nowrap;" nz-checkbox [nzValue]="item.value" [(ngModel)]="item.checked">
+          {{ item.label }}
+        </label>
+      </div>
+    </div>
+  </nz-checkbox-wrapper>
+</div>
+
+<div *ngIf="!isLoading" style="display: flex; flex-wrap: wrap; flex-direction: row; justify-content: flex-start;">
+  <nz-card *ngFor="let item of listCourse" (click)="getCourseDetail(item.ID_COURSE)"
+    style="max-width:18.6rem; border-radius: 8px; margin-right: 1rem; margin-bottom: 1rem; cursor: pointer;">
+    <img style="border-radius: 16px;" width="100%" [src]="item.AVATAR_COURSE" alt="" />
+    <div style="margin: 0.5rem 0; display: flex; align-items: center; justify-content: space-between">
+      <div>
+        <nz-tag style="border-radius: 16px;" [nzColor]="getCategoryNameColor(item.CATEGORY_NAME)">
+          {{ item.CATEGORY_NAME }}
+        </nz-tag>
+        <nz-tag style="border-radius: 16px;" [nzColor]="getCourseTypeColor(item.TYPE_COURSE)">
+          {{ getCourseType(item.TYPE_COURSE) }}
+        </nz-tag>
+      </div>
+      <div>
+        <i style="color: #D9D9D9;" class="fas fa-clock"></i>
+        <span style="margin-left: 0.3rem; color: #696984; font-size: 0.7rem">Khoảng {{
+          calculateMonthsDifference(item.START_DATE, item.END_DATE) }} tháng</span>
+      </div>
+    </div>
+
+    <div style="margin: 0.5rem 0 1rem 0;">
+      <h6 style="font-size: 1rem; min-height: 2.5rem;">{{ item.COURSE_NAME }}</h6>
+      <p style="color: #696984; margin: 0; padding: 0;"><strong>{{ item.LESSON_QUANTITY }}</strong> Bài giảng</p>
+      <p style="color: #696984; margin: 0; padding: 0;"><strong>{{ item.QUIZ_QUANTITY }}</strong> Câu hỏi ôn tập</p>
+    </div>
+
+    <div style="display: flex; align-items: center; justify-content: space-between">
+      <div>
+        <nz-avatar [nzSrc]="item.TEACHER_INFO.AVATAR"></nz-avatar>
+        <span style="margin-left: 0.3rem;">{{ item.TEACHER_INFO.USERNAME }}</span>
+      </div>
+    </div>
+    <div style="display: flex; align-items: center; justify-content: space-between">
+      <div style="margin-top: 0.5rem">Giá:</div>
+      <div style="display: flex; align-items: center; justify-content: flex-end">
+        <p style="color: #808080; margin: 0; padding: 0; font-size: 0.9rem;"><em><s>{{ item.PRICE.toLocaleString()
+              }}</s></em></p>
+        <p style="color: #f56a00; margin: 0; padding: 0; font-size: 1rem; margin-left: 0.5rem;"><strong>
+            {{ item.DISCOUNT.toLocaleString() }} VND</strong></p>
+      </div>
+    </div>
+  </nz-card>
+</div>
+
+<nz-skeleton *ngIf="isLoading"></nz-skeleton>
+
+<app-no-result *ngIf="listCourse.length < 1 && !isLoading"></app-no-result>
+
+<div style="display: flex; justify-content: center; margin-top: 0.6rem;">
+  <nz-pagination [nzPageIndex]="currentPage" [nzTotal]="totalCourses" [nzPageSize]="8"
+    (nzPageIndexChange)="onPageChange($event)">
+  </nz-pagination>
+</div>

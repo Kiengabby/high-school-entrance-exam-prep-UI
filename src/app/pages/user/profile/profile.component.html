@@ -1,0 +1,146 @@
+<div class="container">
+    <div class="main-body">
+        <div class="row">
+            <div class="col-lg-4">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-flex flex-column align-items-center text-center">
+                            <span class="avartar-img">
+                                <div *ngIf="userAvatar=='null'">
+                                    <strong>{{username[0].toUpperCase()}}</strong>
+                                </div>
+                                <img *ngIf="userAvatar!='null'" style="width: 6.8rem; height: 6.8rem;" [src]="userAvatar" alt="">
+                            </span>
+                            <div class="mt-3">
+                                <h4>{{username}}</h4>
+                                <p class="text-muted font-size-sm" *ngIf="role == '1'">
+                                    Học sinh
+                                </p>
+                                <p class="text-muted font-size-sm" *ngIf="role == '2'">
+                                    Giáo viên
+                                </p>
+                                <p class="text-muted font-size-sm" *ngIf="role == '0'">
+                                    Người quản trị hệ thống
+                                </p>
+                                <p *ngIf="userInfo.SCHOOL_INFO.SCHOOL_NAME" class="text-muted font-size-sm">{{
+                                    userInfo.SCHOOL_INFO.SCHOOL_NAME }}</p>
+                                <p *ngIf="userInfo.SCHOOL_INFO.PROVINCE_INFO.PROVINCE_NAME"
+                                    class="text-muted font-size-sm">{{ userInfo.SCHOOL_INFO.PROVINCE_INFO.PROVINCE_NAME
+                                    }}</p>
+                            </div>
+                        </div>
+                        <hr class="my-4">
+                        <ul class="list-group list-group-flush">
+                            <li *ngIf="userInfo.INSTAGRAM"
+                                class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                                <h6 class="mb-0"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                        stroke-linecap="round" stroke-linejoin="round"
+                                        class="feather feather-instagram me-2 icon-inline text-danger">
+                                        <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                                        <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                                        <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                                    </svg>Instagram</h6>
+                                <span class="text-secondary">{{ userInfo.INSTAGRAM }}</span>
+                            </li>
+                            <li *ngIf="userInfo.INSTAGRAM"
+                                class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                                <h6 class="mb-0"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                        stroke-linecap="round" stroke-linejoin="round"
+                                        class="feather feather-facebook me-2 icon-inline text-primary">
+                                        <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z">
+                                        </path>
+                                    </svg>Facebook</h6>
+                                <span class="text-secondary">{{ userInfo.FACEBOOK }}</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-8">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row mb-3">
+                            <div class="col-sm-3">
+                                <h6 class="mb-0">Tên</h6>
+                            </div>
+                            <div class="col-sm-4 text-secondary">
+                                <input *ngIf="isEditing" [(ngModel)]="newUserName" style="border-radius: 1rem;" nz-input
+                                    type="text" class="form-control" value="John Doe">
+                                <span *ngIf="!isEditing">{{ newUserName }}</span>
+                            </div>
+                            <div class="col-sm-2">
+                                Giới tính
+                            </div>
+                            <div class="col-sm-1 text-secondary">
+                                <nz-select *ngIf="isEditing" style="width: 100%; min-width: 100px;"
+                                    [(ngModel)]="gender">
+                                    <nz-option nzValue="0" nzLabel="Nam"></nz-option>
+                                    <nz-option nzValue="1" nzLabel="Nữ"></nz-option>
+                                    <nz-option nzValue="2" nzLabel="Khác"></nz-option>
+                                </nz-select>
+                                <span *ngIf="!isEditing">{{ gender==1?'Nữ':'Nam' }}</span>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-sm-3">
+                                <h6 class="mb-0">Số điện thoại</h6>
+                            </div>
+                            <div class="col-sm-9 text-secondary">
+                                <input *ngIf="isEditing" [(ngModel)]="phoneNumber" style="border-radius: 1rem;" nz-input
+                                    type="text" class="form-control" value="(239) 816-9029">
+                                <span *ngIf="!isEditing">
+                                    {{ phoneNumber }}
+                                </span>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-sm-3">
+                                <h6 class="mb-0">Địa chỉ</h6>
+                            </div>
+                            <div class="col-sm-9 text-secondary">
+                                <input *ngIf="isEditing" [(ngModel)]="address" style="border-radius: 1rem;" nz-input
+                                    type="text" class="form-control" value="Bay Area, San Francisco, CA">
+                                <span *ngIf="!isEditing">
+                                    {{ address }}
+                                </span>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-sm-3">
+                                <h6 class="mb-0">Link facebook</h6>
+                            </div>
+                            <div class="col-sm-9 text-secondary">
+                                <input *ngIf="isEditing" [(ngModel)]="facebook" style="border-radius: 1rem;" nz-input
+                                    type="text" class="form-control" value="Bay Area, San Francisco, CA">
+                                <span *ngIf="!isEditing">
+                                    {{ facebook }}
+                                </span>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-sm-3">
+                                <h6 class="mb-0">Link instagram</h6>
+                            </div>
+                            <div class="col-sm-9 text-secondary">
+                                <input *ngIf="isEditing" [(ngModel)]="instagram" style="border-radius: 1rem;" nz-input
+                                    type="text" class="form-control" value="Bay Area, San Francisco, CA">
+                                <span *ngIf="!isEditing">
+                                    {{instagram}}
+                                </span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-3"></div>
+                            <div class="col-sm-9 text-secondary">
+                                <button *ngIf="!isEditing" (click)="updateInfo()" nz-button nzType="primary"><span nz-icon nzType="edit" nzTheme="outline"></span> Thay đổi thông tin</button>
+                                <button *ngIf="isEditing" nz-button nzType="primary"><span nz-icon nzType="save" nzTheme="fill"></span> Lưu thay đổi</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
