@@ -1,120 +1,132 @@
-# OnThiUI - Hệ thống E-Learning
+# Angular E-Learning Platform
 
-## Mô tả dự án
+## Project Overview
 
-OnThiUI là một ứng dụng web E-Learning được xây dựng bằng Angular, cung cấp nền tảng học tập trực tuyến với các tính năng:
+A comprehensive E-Learning web application built with Angular, providing an online education platform with advanced features for course management, real-time communication, and user administration.
 
-- **Quản lý khóa học**: Tạo, chỉnh sửa và quản lý khóa học
-- **Hệ thống người dùng**: Phân quyền Admin, Teacher, Student
-- **Chat real-time**: Tính năng chat với WebSocket
-- **Quản lý bài học**: Upload video, tài liệu, bài tập
-- **Lịch học**: Quản lý lịch trình học tập
-- **Thanh toán**: Tích hợp mua khóa học
+###  Key Features
 
-## Công nghệ sử dụng
+-  Course Management: Create, edit, and manage educational courses
+-  User Role System: Admin, Teacher, and Student role-based access control
+-  Real-time Chat: WebSocket-powered instant messaging system
+-  Multimedia Learning: Video upload, document sharing, and assignment management
+-  Schedule Management: Comprehensive calendar and scheduling system
+-  Payment Integration: Course purchase and payment processing
+-  Responsive Design: Optimized for desktop, tablet, and mobile devices
 
-- **Frontend**: Angular 15+
-- **Styling**: Less CSS
-- **Real-time**: WebSocket (RxStomp)
-- **UI Components**: Custom components
-- **File Upload**: Tích hợp upload file/video
-- **Authentication**: JWT Token
+##  Technology Stack
 
-## Cài đặt và chạy dự án
+- **Frontend Framework**: Angular 15+
+- **Styling**: Less CSS with custom component library
+- **Real-time Communication**: WebSocket (RxStomp)
+- **Authentication**: JWT Token-based security
+- **File Management**: Advanced upload system for multimedia content
+- **UI/UX**: Custom Angular components with modern design patterns
 
-### Yêu cầu hệ thống
-- Node.js (v16+)
-- npm hoặc yarn
-- Angular CLI
+##  Getting Started
 
-### Các bước cài đặt
+### Prerequisites
 
-1. **Clone repository**
+- Node.js (v16 or higher)
+- npm or yarn package manager
+- Angular CLI (latest version)
+
+### Installation
+
+1. **Clone the repository**
 ```bash
-git clone https://github.com/YOUR_USERNAME/OnThiUI.git
-cd OnThiUI
+git clone https://github.com/YOUR_USERNAME/angular-elearning-platform.git
+cd angular-elearning-platform
 ```
 
-2. **Cài đặt dependencies**
+2. **Install dependencies**
 ```bash
 npm install
 ```
 
-3. **Cài đặt các package bổ sung**
+3. **Install additional packages**
 ```bash
 npm install --save --force tinymce @tinymce/tinymce-angular
-npm i ngx-doc-viewer@1.4.1
+npm install ngx-doc-viewer@1.4.1
 ```
 
-4. **Chạy ứng dụng**
+4. **Start the development server**
 ```bash
 ng serve
 ```
 
-5. **Truy cập ứng dụng**
-Mở trình duyệt và truy cập: `http://localhost:4200`
+5. **Access the application**
+Open your browser and navigate to: `http://localhost:4200`
 
-## 📁 Cấu trúc dự án
+##  Project Structure
 
 ```
 src/
 ├── app/
-│   ├── authentication/     # Module xác thực
-│   ├── pages/             # Các trang chính
-│   │   ├── admin/         # Trang admin
-│   │   ├── teacher/       # Trang giáo viên
-│   │   └── user/          # Trang học viên
-│   ├── service/           # Các service
-│   ├── shared/            # Components dùng chung
-│   └── models/            # Data models
-├── assets/                # Tài nguyên tĩnh
-└── environments/          # Cấu hình môi trường
+│   ├── authentication/           # Authentication module
+│   ├── pages/                   # Main application pages
+│   │   ├── admin/              # Administrator dashboard
+│   │   ├── teacher/            # Teacher management interface
+│   │   └── user/               # Student learning interface
+│   ├── service/                # Business logic services
+│   ├── shared/                 # Reusable components
+│   ├── models/                 # TypeScript data models
+│   └── configs/                # Application configuration
+├── assets/                     # Static resources
+└── environments/               # Environment configurations
 ```
 
-## 👥 Phân quyền người dùng
+##  User Roles & Permissions
 
-- **Admin**: Quản lý toàn bộ hệ thống, duyệt khóa học
-- **Teacher**: Tạo và quản lý khóa học, quản lý học viên
-- **Student**: Tham gia khóa học, làm bài tập, chat
+###  Administrator
+- **User Management**: Full control over user accounts and permissions
+- **Course Approval**: Review and approve teacher-submitted courses
+- **System Oversight**: Monitor platform usage and manage requests
+- **Content Moderation**: Ensure quality and compliance standards
 
-## 🔧 Tính năng chính
+###  Teacher/Instructor
+- **Course Creation**: Design and publish educational content
+- **Student Management**: Track progress and manage enrollments
+- **Content Upload**: Add videos, documents, and assignments
+- **Assessment Tools**: Create quizzes and evaluate submissions
 
-### Cho Admin
-- Quản lý người dùng
-- Duyệt khóa học
-- Quản lý yêu cầu khóa học
+###  Student/Learner
+- **Course Enrollment**: Browse and join available courses
+- **Learning Materials**: Access videos, documents, and resources
+- **Interactive Features**: Participate in discussions and chat
+- **Progress Tracking**: Monitor learning achievements and schedules
 
-### Cho Teacher
-- Tạo và chỉnh sửa khóa học
-- Upload video và tài liệu
-- Quản lý học viên
-- Tạo bài tập và kiểm tra
+##  Core Features
 
-### Cho Student
-- Đăng ký và tham gia khóa học
-- Xem video bài học
-- Làm bài tập
-- Chat với giáo viên
-- Quản lý lịch học
+###  Dashboard & Analytics
+- Personalized user dashboards
+- Progress tracking and reporting
+- Performance analytics
 
-## 📱 Responsive Design
+###  Learning Management
+- Interactive video player
+- Document viewer integration
+- Assignment submission system
+- Real-time progress updates
 
-Ứng dụng được thiết kế responsive, hỗ trợ tốt trên:
-- Desktop
-- Tablet
-- Mobile
+###  Security & Authentication
+- JWT-based authentication system
+- Role-based route guards
+- HTTP request interceptors
+- Input validation and sanitization
 
-## 🔐 Bảo mật
+##  Browser Support
 
-- JWT Authentication
-- Route Guards
-- HTTP Interceptors
-- Input validation
+- Chrome (latest)
+- Firefox (latest)
+- Safari (latest)
+- Edge (latest)
 
-## 📞 Liên hệ
+##  Development Notes
 
-Nếu có thắc mắc về dự án, vui lòng liên hệ qua GitHub Issues.
-
----
-
-**Lưu ý**: Dự án này được phát triển cho mục đích học tập và phỏng vấn.
+This project demonstrates modern Angular development practices including:
+- Modular architecture with lazy loading
+- Reactive programming with RxJS
+- Custom component library
+- Real-time data synchronization
+- Comprehensive error handling
